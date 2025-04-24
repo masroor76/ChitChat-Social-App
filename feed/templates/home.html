@@ -1,66 +1,60 @@
 {% extends "baseLayout.html" %}
 
 {% block title %}Home{%endblock %}
-{% block navbar %}
-<div>
-    {% if user.is_authenticated %}
-    {{ user }}
-    <a href="/accounts/logout/">Logout</a>
-    {% else %}
-    <a href="/accounts/login/">Login</a>
-    {% endif %}
-</div>
-{%endblock %}
-
 {%block content %}
-<div>
-    <br />
+<div class="d-flex w-100 justify-content-center row">
     {% if posts.count > 0 %}
-    <div style="border: 10px; border-radius: 15%;border-color: black;">
-        {% for post in posts %}
+    {% for post in posts %}
+    <div class=" w-50 card m-3 " style="height: 500px;">
         {% if post.image %}
-        <img src="{{post.image.url}}" style="height: 50px;width: 50px;">
+        <img src="{{post.image.url}}"
+            style="object-fit: none; object-position: center; width: 100%; max-height: 70%; margin-bottom: 1rem;"
+            class=" img-fluid card-img-top" alt="{{post.title}}">
         {% endif %}
+        <hr class="border-bottom border-1 border-black m-0 p-0">
 
-        <!-- <p>{{post.post_text}}</p> -->
-        <h4>
-            <h5>Created by: {{post.post_creater}} </h5>
-        </h4>
-        <div>{% if post.likes.count > 0 %}
-            {{post.likes.count}} - Likes
-            {% else %}
-            No Likes Yet
-            {% endif %}
-        </div>
-
-        <!-- <div>
-            {% for userWhoLiked in post.likes.all %}
-            {% if userWhoLiked.id is user.id %}
-            Unlike
-            {% endif%}
-            {% endfor %}
-        </div> -->
-        <div>
-            {% if user.is_authenticated %}
-            <div>
-                {% if user not in post.likes.all %}
-                <a href="posts/like/{{post.id}}/">Like</a>
-
-                {% else %}
-                <a href="posts/unlike/{{post.id}}/">Unlike</a>
-                {% endif%}
+        <div class="card-body" style="max-height: 30%;">
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+                <div class="col w-100">
+                    <h4>{{post.title}}</h4>
+                </div>
+                <div class="col w-100">
+                    {{post.post_text}}
+                </div>
             </div>
+            <div class="row w-100">
+                <div class="row w-5 col-sm justify-content-between">
+                    <div class="col-sm  justify-content-center">
+                        {% if post.likes.count > 0 %}
+                        {{post.likes.count}}
+                        {% endif %}
+                    </div>
+                    <div class="col-sm">
+                        {% if user.is_authenticated %}
+                        <div>
+                            {% if user not in post.likes.all %}
+                            <a href="posts/like/{{post.id}}/"><img src="media/projectImages/thumbs-up.png"
+                                    style="height:30px;width: 30px;"></a>
+                            {% else %}
+                            <a href="posts/unlike/{{post.id}}/"><img src="media/projectImages/thumb-up.png"
+                                    style="height:30px;width: 30px;"></a>
+                            {% endif%}
+                        </div>
 
-            {% else %}
-            <a href="/accounts/login/">Login to Like</a>
-            {% endif %}
+                        {% else %}
+                        <a href="/accounts/login/"><img src="media/projectImages/thumbs-up.png"
+                                style="height:30px;width: 30px;"></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm">Created by: {{post.post_creater}}</div>
+            </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        {% endfor %}
+
+
+
     </div>
+    {% endfor %}
     {% else %}
     No New Posts For You
     <br /><br /><br />

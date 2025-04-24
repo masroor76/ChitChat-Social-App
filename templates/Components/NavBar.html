@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class=" w-75 container-fluid ">
+        <a class=" navbar-brand" href="/">ChitCHat</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link" href="/posts/create-post/">Create Post</a>
+            </div>
+        </div>
+        <div class="d-flex">
+            {% if user.is_authenticated %}
+            <div class="navbar-nav">
+                <a class="nav-link" href="#">{{ user }}</a>
+            </div>
+            <a href="/accounts/logout/"><button class="btn btn-outline-success">Logout</button></a>
+            {% else %}
+            <a href="/accounts/login/"><button class="btn btn-outline-success">Login</button></a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
