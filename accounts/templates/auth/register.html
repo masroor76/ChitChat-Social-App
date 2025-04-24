@@ -1,0 +1,16 @@
+{% extends "baseLayout.html" %}
+
+{% block title %}Registration{%endblock %}
+{%block content %}
+<div>
+    <h1>Registration</h1>
+    <form action="." method="POST">
+        {{form.as_p}}
+        {% csrf_token %}
+        <input type="submit" value="Register" />
+    </form>
+    <div>
+        Already Registered, <a href="/accounts/login/">Login Now</a>
+    </div>
+</div>
+{% endblock %}

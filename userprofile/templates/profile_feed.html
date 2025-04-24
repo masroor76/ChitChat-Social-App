@@ -1,0 +1,32 @@
+{% extends "baseLayout.html" %}
+
+{% block title %}{{ user.first_name }} Profile{%endblock %}
+{%block content %}
+<div>
+    <div>
+        {% if user.is_authenticated %}
+        {{ user }}
+        <a href="/accounts/logout/">Logout</a>
+        {% else %}
+        <a href="/accounts/login/">Login</a>
+        {% endif %}
+    </div>
+    <div>
+        {% if posts|length > 0  %}
+        <div>
+            {% for post in posts %}
+            {% if post.image %}
+            <img src="{{post.image.url}}">
+            {% endif %}
+            {{post.post_text}}
+            {{post.post_creater.first_name}}
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No Post Yet</p>
+        <a href="/posts/create-post">Create a Post</a>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

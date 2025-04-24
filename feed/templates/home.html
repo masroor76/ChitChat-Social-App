@@ -1,0 +1,76 @@
+{% extends "baseLayout.html" %}
+
+{% block title %}Home{%endblock %}
+{% block navbar %}
+<div>
+    {% if user.is_authenticated %}
+    {{ user }}
+    <a href="/accounts/logout/">Logout</a>
+    {% else %}
+    <a href="/accounts/login/">Login</a>
+    {% endif %}
+</div>
+{%endblock %}
+
+{%block content %}
+<div>
+    <br />
+    {% if posts.count > 0 %}
+    <div style="border: 10px; border-radius: 15%;border-color: black;">
+        {% for post in posts %}
+        {% if post.image %}
+        <img src="{{post.image.url}}" style="height: 50px;width: 50px;">
+        {% endif %}
+
+        <!-- <p>{{post.post_text}}</p> -->
+        <h4>
+            <h5>Created by: {{post.post_creater}} </h5>
+        </h4>
+        <div>{% if post.likes.count > 0 %}
+            {{post.likes.count}} - Likes
+            {% else %}
+            No Likes Yet
+            {% endif %}
+        </div>
+
+        <!-- <div>
+            {% for userWhoLiked in post.likes.all %}
+            {% if userWhoLiked.id is user.id %}
+            Unlike
+            {% endif%}
+            {% endfor %}
+        </div> -->
+        <div>
+            {% if user.is_authenticated %}
+            <div>
+                {% if user not in post.likes.all %}
+                <a href="posts/like/{{post.id}}/">Like</a>
+
+                {% else %}
+                <a href="posts/unlike/{{post.id}}/">Unlike</a>
+                {% endif%}
+            </div>
+
+            {% else %}
+            <a href="/accounts/login/">Login to Like</a>
+            {% endif %}
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        {% endfor %}
+    </div>
+    {% else %}
+    No New Posts For You
+    <br /><br /><br />
+    <div>
+        {% if user.is_authenticated %}
+        <a href="/posts/create-post/">Create a Post Now</a>
+        {% else %}
+        Login to Create New Posts.
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

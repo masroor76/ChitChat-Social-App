@@ -1,0 +1,15 @@
+{% extends "baseLayout.html" %}
+
+{% block title %} Create Post {%endblock %}
+{%block content %}
+<div>
+    <h2>Create Post</h2>
+    <div>
+        <form action="." enctype="multipart/form-data" method="POST">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="Create" />
+        </form>
+    </div>
+</div>
+{% endblock %}
